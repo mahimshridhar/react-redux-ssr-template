@@ -1,0 +1,42 @@
+{
+  "name": "basic-react-ssr-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahimshridhar/basic-react-ssr-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahimshridhar/basic-react-ssr-template/issues"
+  },
+  "homepage": "https://github.com/mahimshridhar/basic-react-ssr-template#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
+    "@babel/plugin-transform-destructuring": "^7.16.0",
+    "@babel/plugin-transform-parameters": "^7.16.3",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "@babel/register": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "webpack": "^5.64.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "isomorphic-fetch": "^3.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-promise-middleware": "^6.1.2",
+    "redux-thunk": "^2.4.1"
+  }
+}
