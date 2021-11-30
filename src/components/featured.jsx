@@ -1,6 +1,7 @@
 import React from "react";
 
 const Featured = (props) => {
+  console.log("props", props);
   const buildIngredients = (ingredients) => {
     const list = [];
 
@@ -38,7 +39,7 @@ const Featured = (props) => {
       <div className="meta">Cook Time: {props.cookTime}</div>
       <div className="meta">Difficulty: {props.difficulty}</div>
       <div className="meta">Servings: {props.servings}</div>
-      <div className="meta">Tags: {props.labels.join(", ")}</div>
+      {/* <div className="meta">Tags: {props.labels.join(", ")}</div> */}
       <h4>Ingredients</h4>
       <div className="ui bulleted list">
         {buildIngredients(props.ingredients)}

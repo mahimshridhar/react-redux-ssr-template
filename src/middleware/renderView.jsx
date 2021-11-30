@@ -5,13 +5,8 @@ import initRedux from "../init-redux";
 import * as actions from "../action-creators";
 import HTML from "../components/html";
 import App from "../components/app";
-import {
-  StaticRouter,
-  Switch,
-  Route,
-  Link,
-  IndexRoute,
-} from "react-router-dom";
+import { Switch, Route, Link, IndexRoute } from "react-router-dom";
+import { StaticRouter } from "react-router-dom";
 
 export default function renderView(req, res, next) {
   const store = initRedux();
@@ -39,8 +34,34 @@ export default function renderView(req, res, next) {
 
   const context = {};
   const markup = ReactDOM.renderToString(
-    <StaticRouter location={req.url} context={context}>
-      <App />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.url} context={context}>
+        <Switch>
+          <Route exact path="/">
+            <App />
+          </Route>
+          <Route
+            path={"*"}
+            render={({ staticContext }) => {
+              if (staticContext) {
+                staticContext.statusCode = 404;
+              }
+              return <div>WHATEVER</div>;
+              // return <Redirect to="/404" />;
+            }}
+          />
+        </Switch>
+      </StaticRouter>
+    </Provider>
   );
+
+  const renderedHTML = ReactDOM.renderToString(
+    <HTML
+      data={`window.__INITIAL_STATE =
+            ${JSON.stringify({})}`}
+      html={markup}
+    />
+  );
+
+  res.send(renderedHTML);
 }

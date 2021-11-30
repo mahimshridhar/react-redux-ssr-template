@@ -17,8 +17,8 @@ class App extends React.Component {
           </div>
         </div>
         <div className="ui padded grid">
-          <Recipes {...this.props} />
-          <Featured {...this.props.featuredRecipe} />
+          {/* <Recipes {...this.props} />
+          <Featured {...this.props.featuredRecipe} /> */}
         </div>
         <div className="ui inverted vertical footer segment">Footer</div>
       </div>
