@@ -45,8 +45,12 @@ const HTML = (props) => {
             __html: props.renderedToStringComponents,
           }}
         />
-        {/* <script dangerouslySetInnerHTML={{ __html: this.props.data }} /> */}
-        <script src="/browser.js" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__SERIALIZED_STATE__ = JSON.stringify(${props.serverState})`,
+          }}
+        />
+        <script type="application/javascript" src="browser.js" />{" "}
       </body>
     </html>
   );

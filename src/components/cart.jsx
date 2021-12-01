@@ -2,10 +2,30 @@ import React, { Component } from "react";
 import { getCartItems } from "../action-creators.es6";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Item from "./item";
 
 class Cart extends Component {
   static prefetchActions() {
     return [getCartItems];
+  }
+
+  constructor(props) {
+    super(props);
+    this.proceedToCheckout = this.proceedToCheckout.bind(this);
+  }
+
+  proceedToCheckout() {
+    this.props.router.push("/cart/payment");
+  }
+
+  getTotal() {
+    let total = 0;
+    if (this.props.items) {
+      total = this.props.items.reduce((prev, current) => {
+        return prev + current.price;
+      }, total);
+    }
+    return total;
   }
 
   renderItems() {
@@ -16,20 +36,31 @@ class Cart extends Component {
         components.push(<Item key={index} {...item} />);
       });
     }
-    return items;
+
+    // console.log("this.props.items", this.props.items);
+
+    // return items;
   }
 
   render() {
-    console.log("this.props", this.props);
+    // console.log("this.props", this.props);
     return (
       <div className="cart main ui segment">
-        <div className="ui segment divided items">Items will go here.</div>
+        <div className="ui segment divided items">
+          {this.props.items.map((item, index) => {
+            return <Item key={index} {...item} />;
+          })}
+        </div>
         <div className="ui right rail">
           <div className="ui segment">
             <span>Total: </span>
-            <span>$10</span>
-            <div></div>
-            <button className="ui positive basic button">Checkout</button>
+            <span>${this.getTotal()}</span>
+            <button
+              onClick={this.proceedToCheckout}
+              className="ui positive basic button"
+            >
+              Checkout
+            </button>
           </div>
         </div>
       </div>

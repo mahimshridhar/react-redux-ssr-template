@@ -46,7 +46,7 @@ export default function renderView(req, res, next) {
           );
           const renderedHTML = ReactDOM.renderToString(
             <HTML
-              data={`window.__INITIAL_STATE =${JSON.stringify({})}`}
+              serverState={`window.__INITIAL_STATE =${JSON.stringify({})}`}
               renderedToStringComponents={markup}
             />
           );
@@ -57,6 +57,8 @@ export default function renderView(req, res, next) {
           // res.send(`<!DOCTYPE html>${err}`);
         });
     } else {
+      res.send(`<!DOCTYPE html><html>hi from app</html>`);
+
       next();
     }
   } catch (err) {
