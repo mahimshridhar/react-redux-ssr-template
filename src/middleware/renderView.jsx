@@ -7,61 +7,60 @@ import HTML from "../components/html";
 import App from "../components/app";
 import { Switch, Route, Link, IndexRoute } from "react-router-dom";
 import { StaticRouter } from "react-router-dom";
+import { routes } from "../shared/sharedRoutes";
+import Cart from "../components/cart";
+import { renderRoutes } from "react-router-config";
+import { matchPath, RouterContext } from "react-router";
 
 export default function renderView(req, res, next) {
-  const store = initRedux();
+  try {
+    const store = initRedux();
 
-  //   store.dispatch(actions.getHomePageData()).then(() => {
-  //     let html;
-  //     const dataToSerialize = store.getState();
+    const activeRoute =
+      routes.find((route) => matchPath(route.path, req.url)) || {};
 
-  //     html = ReactDOM.renderToString(
-  //       <Provider store={store}>
-  //         <App />
-  //       </Provider>
-  //     );
+    if (activeRoute.component && activeRoute.component.prefetchActions) {
+      let actions = activeRoute.component.prefetchActions() || [];
 
-  //     const renderedHTML = ReactDOM.renderToString(
-  //       <HTML
-  //         data={`window.__INITIAL_STATE =
-  //           ${JSON.stringify(dataToSerialize)}`}
-  //         html={html}
-  //       />
-  //     );
+      actions = actions.reduce((flat, toFlatten) => {
+        return flat.concat(toFlatten);
+      }, []);
 
-  //     res.send(renderedHTML);
-  //   });
+      const promises = actions.map((initialAction) => {
+        return store.dispatch(initialAction());
+      });
 
-  const context = {};
-  const markup = ReactDOM.renderToString(
-    <Provider store={store}>
-      <StaticRouter location={req.url} context={context}>
-        <Switch>
-          <Route exact path="/">
-            <App />
-          </Route>
-          <Route
-            path={"*"}
-            render={({ staticContext }) => {
-              if (staticContext) {
-                staticContext.statusCode = 404;
-              }
-              return <div>WHATEVER</div>;
-              // return <Redirect to="/404" />;
-            }}
-          />
-        </Switch>
-      </StaticRouter>
-    </Provider>
-  );
+      Promise.all(promises)
+        .then(() => {
+          const serverState = store.getState();
 
-  const renderedHTML = ReactDOM.renderToString(
-    <HTML
-      data={`window.__INITIAL_STATE =
-            ${JSON.stringify({})}`}
-      html={markup}
-    />
-  );
+          console.log("serverState", serverState);
 
-  res.send(renderedHTML);
+          const context = {};
+          const markup = ReactDOM.renderToString(
+            <Provider store={store}>
+              <StaticRouter location={req.url} context={context}>
+                <Switch>{renderRoutes(routes)}</Switch>
+              </StaticRouter>
+            </Provider>
+          );
+          const renderedHTML = ReactDOM.renderToString(
+            <HTML
+              data={`window.__INITIAL_STATE =${JSON.stringify({})}`}
+              renderedToStringComponents={markup}
+            />
+          );
+          res.send(`<!DOCTYPE html>${renderedHTML}`);
+        })
+        .catch((err) => {
+          console.log("err", err);
+          // res.send(`<!DOCTYPE html>${err}`);
+        });
+    } else {
+      next();
+    }
+  } catch (err) {
+    console.log("error", err);
+    next();
+  }
 }
