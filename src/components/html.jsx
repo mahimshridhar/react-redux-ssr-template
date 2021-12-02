@@ -1,32 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// export default class HTML extends React.Component {
-//   render() {
-//     return (
-//       <html>
-//         <head>
-//           <title>Chapter 2 - Recipes</title>
-//           <link
-//             rel="stylesheet"
-//             href="https://cdn.jsdelivr.net/semantic-ui/2.2.2/semantic.min.css"
-//           />
-//         </head>
-//         <body>
-//           <div
-//             id="react-content"
-//             dangerouslySetInnerHTML={{
-//               __html: this.props.renderedToStringComponents,
-//             }}
-//           />
-//           {/* <script dangerouslySetInnerHTML={{ __html: this.props.data }} /> */}
-//           <script src="/browser.js" />
-//         </body>
-//       </html>
-//     );
-//   }
-// }
-
 const HTML = (props) => {
   return (
     <html>
@@ -34,8 +8,11 @@ const HTML = (props) => {
         <title>Chapter 2 - Recipes</title>
         <link
           rel="stylesheet"
-          href="https://cdn.jsdelivr.net/semantic-ui/2.2.2/semantic.min.css"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous"
         />
+
         <link rel="stylesheet" href="/assets/style.css" />
       </head>
       <body>

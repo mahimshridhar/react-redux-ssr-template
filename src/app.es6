@@ -4,6 +4,8 @@ import renderViewMiddleware from "./middleware/renderView";
 
 const app = express();
 
+app.use(express.static(__dirname));
+
 app.get("/api/user/cart", (req, res) => {
   fs.readFile("./data/cart.json", "utf8", (err, data) => {
     if (err) {

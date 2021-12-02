@@ -9,11 +9,11 @@ module.exports = {
       {
         test: /\.(jsx|es6)$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        use: "babel-loader",
       },
       {
         test: /\.css$/,
-        loaders: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader"],
       },
     ],
   },

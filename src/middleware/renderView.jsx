@@ -33,9 +33,6 @@ export default function renderView(req, res, next) {
       Promise.all(promises)
         .then(() => {
           const serverState = store.getState();
-
-          console.log("serverState", serverState);
-
           const context = {};
           const markup = ReactDOM.renderToString(
             <Provider store={store}>
@@ -46,7 +43,9 @@ export default function renderView(req, res, next) {
           );
           const renderedHTML = ReactDOM.renderToString(
             <HTML
-              serverState={`window.__INITIAL_STATE =${JSON.stringify({})}`}
+              serverState={`window.__INITIAL_STATE =${JSON.stringify(
+                serverState
+              )}`}
               renderedToStringComponents={markup}
             />
           );
@@ -57,9 +56,20 @@ export default function renderView(req, res, next) {
           // res.send(`<!DOCTYPE html>${err}`);
         });
     } else {
-      res.send(`<!DOCTYPE html><html>hi from app</html>`);
-
-      next();
+      const markup = ReactDOM.renderToString(
+        <Provider store={store}>
+          <StaticRouter location={req.url} context={{}}>
+            <Switch>{renderRoutes(routes)}</Switch>
+          </StaticRouter>
+        </Provider>
+      );
+      const renderedHTML = ReactDOM.renderToString(
+        <HTML
+          serverState={`window.__INITIAL_STATE =${JSON.stringify({})}`}
+          renderedToStringComponents={markup}
+        />
+      );
+      res.send(`<!DOCTYPE html>${renderedHTML}`);
     }
   } catch (err) {
     console.log("error", err);

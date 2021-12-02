@@ -4,23 +4,22 @@ import Recipes from "./recipes";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "../action-creators";
+import Banner from "../components/banner";
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <div className="ui fixed inverted menu">
-          <div className="ui contianer">
-            <a href="/" className="header item">
-              Recipes Example App
-            </a>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#"></a>
+            </div>
           </div>
-        </div>
-        <div className="ui padded grid">
-          {/* <Recipes {...this.props} />
-          <Featured {...this.props.featuredRecipe} /> */}
-        </div>
-        <div className="ui inverted vertical footer segment">Footer</div>
+        </nav>
+        <Banner show>
+          <h3>Check out the semi-annual sale! Up to 75% off select Items</h3>
+        </Banner>
       </div>
     );
   }

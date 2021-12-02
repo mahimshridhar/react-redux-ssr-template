@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "../components/app";
+// import App from "../components/app";
 import { Provider } from "react-redux";
 import initRedux from "./init-redux.es6";
 import { Switch, Route, Link, IndexRoute } from "react-router-dom";
-import { StaticRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { routes } from "./shared/sharedRoutes";
 // import Cart from "../components/cart";
 import { renderRoutes } from "react-router-config";
@@ -17,15 +17,11 @@ const store = initRedux(initialState);
 
 console.log("Data to hydrate with", initialState);
 
-function init() {
-  ReactDOM.render(
-    <Provider store={store}>
-      <StaticRouter location={req.url} context={context}>
-        <Switch>{renderRoutes(routes)}</Switch>
-      </StaticRouter>
-    </Provider>,
-    document.getElementById("react-content")
-  );
-}
-
-init();
+ReactDOM.render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <Switch>{renderRoutes(routes)}</Switch>
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById("react-content")
+);
