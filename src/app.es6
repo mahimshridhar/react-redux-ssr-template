@@ -41,6 +41,10 @@ app.get("/featured", (req, res) => {
   });
 });
 
+app.get("/test", (req, res) => {
+  res.send("Test route success!");
+});
+
 app.get("/*", renderViewMiddleware);
 
 app.listen(3000, () => {
