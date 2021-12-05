@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
-    "build:browser": "webpack --config webpack.config.js"
+    "start": "NODE_ENV=development SERVER=TRUE node src/server.js",
+    "dev": "nodemon src/server.js --watch src",
+    "build:browser": "webpack --config webpack.config.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -18,9 +20,22 @@
     "url": "https://github.com/mahimshridhar/basic-react-ssr-template/issues"
   },
   "homepage": "https://github.com/mahimshridhar/basic-react-ssr-template#readme",
+  "jest": {
+    "transform": {
+      "\\.(jsx|es6)$": "babel-jest"
+    },
+    "setupFiles": [
+      "./setupTests.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
     "@babel/plugin-transform-destructuring": "^7.16.0",
     "@babel/plugin-transform-parameters": "^7.16.3",
@@ -28,20 +43,30 @@
     "@babel/preset-react": "^7.16.0",
     "@babel/register": "^7.16.0",
     "babel-loader": "^8.2.3",
+    "babel-plugin-dynamic-import-node": "^2.3.3",
     "css-loader": "^6.5.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "eslint": "^8.3.0",
+    "jest": "^27.4.3",
+    "nodemon": "^2.0.15",
     "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.4",
     "style-loader": "^3.3.1",
     "webpack": "^5.64.4",
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
+    "babel-jest": "^27.4.2",
+    "classnames": "^2.3.1",
     "express": "^4.17.1",
     "isomorphic-fetch": "^3.0.0",
+    "lru-cache": "^6.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "react-router-config": "^5.1.1",
-    "react-router-dom": "^5.3.0",
+    "react-router-dom": "^5.1.2",
     "redux": "^4.1.2",
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.4.1"

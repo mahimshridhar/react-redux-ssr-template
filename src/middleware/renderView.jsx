@@ -1,78 +1,76 @@
 import React from "react";
-import ReactDOM from "react-dom/server";
-import { Provider } from "react-redux";
-import initRedux from "../init-redux";
-import * as actions from "../action-creators";
-import HTML from "../components/html";
-import App from "../components/app";
-import { Switch, Route, Link, IndexRoute } from "react-router-dom";
+import { renderToString, renderToNodeStream } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
-import { routes } from "../shared/sharedRoutes";
-import Cart from "../components/cart";
-import { renderRoutes } from "react-router-config";
-import { matchPath, RouterContext } from "react-router";
+import { matchRoutes, renderRoutes } from "react-router-config";
+import { Provider } from "react-redux";
+import routes from "../shared/sharedRoutes2.es6";
+import HTML from "../components/html";
+import initRedux from "../init-redux";
+// import cache from "../shared/cache.es6";
 
 export default function renderView(req, res, next) {
-  try {
+  const matches = matchRoutes(routes, req.path);
+  const context = {};
+
+  if (matches) {
+    // const cachedPage = cache.get(req.url);
+    // if (cachedPage) {
+    //   return res.send(cachedPage);
+    // }
+
     const store = initRedux();
+    let actions = [];
+    matches.map(({ match, route }) => {
+      const component = route.component;
+      if (component) {
+        if (
+          component.displayName &&
+          component.displayName.toLowerCase().indexOf("connect") > -1
+        ) {
+          let parentComponent = component.WrappedComponent;
+          if (parentComponent.prefetchActions) {
+            actions.push(parentComponent.prefetchActions());
+          } else if (
+            parentComponent.wrappedComponent &&
+            parentComponent.wrappedComponent().prefetchActions
+          ) {
+            actions.push(parentComponent.wrappedComponent().prefetchActions());
+          }
+        } else if (component.prefetchActions) {
+          actions.push(component.prefetchActions());
+        }
+      }
+    });
+    actions = actions.reduce((flat, toFlatten) => {
+      return flat.concat(toFlatten);
+    }, []);
 
-    const activeRoute =
-      routes.find((route) => matchPath(route.path, req.url)) || {};
-
-    if (activeRoute.component && activeRoute.component.prefetchActions) {
-      let actions = activeRoute.component.prefetchActions() || [];
-
-      actions = actions.reduce((flat, toFlatten) => {
-        return flat.concat(toFlatten);
-      }, []);
-
-      const promises = actions.map((initialAction) => {
-        return store.dispatch(initialAction());
-      });
-
-      Promise.all(promises)
-        .then(() => {
-          const serverState = store.getState();
-          const context = {};
-          const markup = ReactDOM.renderToString(
-            <Provider store={store}>
-              <StaticRouter location={req.url} context={context}>
-                <Switch>{renderRoutes(routes)}</Switch>
-              </StaticRouter>
-            </Provider>
-          );
-          const renderedHTML = ReactDOM.renderToString(
-            <HTML
-              serverState={`window.__INITIAL_STATE =${JSON.stringify(
-                serverState
-              )}`}
-              renderedToStringComponents={markup}
-            />
-          );
-          res.send(`<!DOCTYPE html>${renderedHTML}`);
-        })
-        .catch((err) => {
-          console.log("err", err);
-          // res.send(`<!DOCTYPE html>${err}`);
-        });
-    } else {
-      const markup = ReactDOM.renderToString(
+    const promises = actions.map((initialAction) => {
+      return store.dispatch(initialAction());
+    });
+    Promise.all(promises).then(() => {
+      const serverState = store.getState();
+      const stringifiedServerState = JSON.stringify(serverState);
+      const app = renderToString(
         <Provider store={store}>
-          <StaticRouter location={req.url} context={{}}>
-            <Switch>{renderRoutes(routes)}</Switch>
+          <StaticRouter location={req.url} context={context}>
+            {renderRoutes(routes)}
           </StaticRouter>
         </Provider>
       );
-      const renderedHTML = ReactDOM.renderToString(
-        <HTML
-          serverState={`window.__INITIAL_STATE =${JSON.stringify({})}`}
-          renderedToStringComponents={markup}
-        />
-      );
-      res.send(`<!DOCTYPE html>${renderedHTML}`);
-    }
-  } catch (err) {
-    console.log("error", err);
+
+      if (!context.url) {
+        const html = renderToString(
+          <HTML
+            renderedToStringComponents={app}
+            serverState={stringifiedServerState}
+          />
+        );
+        // cache.set(req.url, `<!DOCTYPE html>${html}`);
+        return res.send(`<!DOCTYPE html>${html}`);
+      }
+    });
+  } else {
     next();
   }
 }

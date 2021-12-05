@@ -1,41 +1,35 @@
-import React from "react";
-import Featured from "./featured";
-import Recipes from "./recipes";
+import React, { useEffect, Component } from "react";
+import { Route, Link } from "react-router-dom";
+import Cart from "./cart";
+import { renderRoutes } from "react-router-config";
+import onRouteChange from "./onRouteChange";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as actionCreators from "../action-creators";
-import Banner from "../components/banner";
+import Nav from "./nav";
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="#"></a>
-            </div>
-          </div>
-        </nav>
-        <Banner show>
-          <h3>Check out the semi-annual sale! Up to 75% off select Items</h3>
-        </Banner>
-      </div>
-    );
-  }
-}
+const App = (props) => {
+  useEffect(() => {
+    console.log("app ran in client");
+  }, []);
 
-function mapStatetoProps(state) {
-  let { recipes, featuredRecipe } = state.recipes;
+  return (
+    <div>
+      {/* <div className="ui fixed inverted menu">
+        <h1 className="header item">All Things Westies</h1>
+        <Link to="/products" className="item">
+          Products
+        </Link>
+        <Link to="/cart" className="item">
+          Cart
+        </Link>
+        <Link to="/profile" className="item">
+          Profile
+        </Link>
+      </div> */}
+      <Nav />
 
-  return {
-    recipes,
-    featuredRecipe,
-  };
-}
+      {renderRoutes(props.route.routes, { history: props.history })}
+    </div>
+  );
+};
 
-function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) };
-}
-
-export default connect(mapStatetoProps, mapDispatchToProps)(App);
+export default connect()(onRouteChange(App));

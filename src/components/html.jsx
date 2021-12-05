@@ -2,18 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const HTML = (props) => {
+  // const metatagsArray = [];
+
+  // props.metatags.forEach((item) => {
+  //   metatagsArray.push(<meta {...item} />);
+  // });
   return (
     <html>
       <head>
         <title>Chapter 2 - Recipes</title>
+        {/* {metatagsArray} */}
         <link
           rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         />
 
-        <link rel="stylesheet" href="/assets/style.css" />
+        <link rel="stylesheet" href="assets/style.css" />
       </head>
       <body>
         <div

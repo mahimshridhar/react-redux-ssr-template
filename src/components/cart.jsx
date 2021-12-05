@@ -9,52 +9,53 @@ class Cart extends Component {
     return [getCartItems];
   }
 
+  // static createMetatags(params, store) {
+  //   const tags = [];
+  //   const items = store.cart ? store.cart.items : null;
+
+  //   if ()
+  // }
+
   constructor(props) {
     super(props);
     this.proceedToCheckout = this.proceedToCheckout.bind(this);
   }
 
-  proceedToCheckout() {
-    this.props.router.push("/cart/payment");
-  }
-
   getTotal() {
     let total = 0;
-    if (this.props.items) {
-      total = this.props.items.reduce((prev, current) => {
+    const items = this.props.items;
+    if (items) {
+      total = items.reduce((prev, current) => {
         return prev + current.price;
       }, total);
     }
     return total;
   }
 
+  proceedToCheckout() {
+    console.log("clicked checkout button", this.props);
+  }
+
   renderItems() {
     const components = [];
     const items = this.props.items;
-    if (this.props.items) {
-      this.props.items.forEach((item, index) => {
+    if (items) {
+      items.forEach((item, index) => {
         components.push(<Item key={index} {...item} />);
       });
     }
-
-    // console.log("this.props.items", this.props.items);
-
-    // return items;
+    return components;
   }
 
   render() {
-    // console.log("this.props", this.props);
     return (
       <div className="cart main ui segment">
-        <div className="ui segment divided items">
-          {this.props.items.map((item, index) => {
-            return <Item key={index} {...item} />;
-          })}
-        </div>
+        <div className="ui segment divided items">{this.renderItems()}</div>
         <div className="ui right rail">
           <div className="ui segment">
             <span>Total: </span>
             <span>${this.getTotal()}</span>
+            <div>Placeholder</div>
             <button
               onClick={this.proceedToCheckout}
               className="ui positive basic button"
@@ -70,7 +71,9 @@ class Cart extends Component {
 
 function mapStateToProps(state) {
   const { items } = state.cart;
-  return { items };
+  return {
+    items,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -80,5 +83,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
-
-// export default Cart;
