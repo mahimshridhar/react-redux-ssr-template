@@ -304,7 +304,9 @@ var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoader
 
 
 var _default = function _default() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Please thanks for helping me i hope its all good");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "products"
+  }, "Please thanks for helping me i hope its all good");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_default);
@@ -622,14 +624,12 @@ var HTML = function HTML(props) {
   // props.metatags.forEach((item) => {
   //   metatagsArray.push(<meta {...item} />);
   // });
-  console.log("assets", props.assets.chunks().javascript.main, Object.keys(props.assets.chunks().javascript).length);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("title", null, "Chapter 2 - Recipes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("link", {
-    rel: "stylesheet",
-    href: "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("link", {
-    rel: "stylesheet",
-    href: "assets/style.css"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  // console.log(
+  //   "assets",
+  //   props.assets.chunks().javascript.main,
+  //   Object.keys(props.assets.chunks().javascript).length
+  // );
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("title", null, "React SSR Template")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "react-content",
     dangerouslySetInnerHTML: {
       __html: props.renderedToStringComponents

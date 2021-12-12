@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import routes from "./shared/sharedRoutes2.es6";
 import { renderRoutes } from "react-router-config";
 
-// require("./style.css");
+require("./styles/style.css");
 
 const initialState = JSON.parse(window.__SERIALIZED_STATE__);
 const store = initRedux(initialState);
