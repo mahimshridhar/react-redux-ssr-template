@@ -5,9 +5,9 @@ import { setDevFileServer } from "./devserver";
 // with the only change that all files
 // are served by webpack devserver.
 
-configuration.output = {
-  ...configuration.output,
-  libraryTarget: "commonjs2",
-};
+// configuration.output = {
+//   ...configuration.output,
+//   libraryTarget: "commonjs2",
+// };
 
 export default setDevFileServer(configuration);

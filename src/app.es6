@@ -1,12 +1,21 @@
 import express from "express";
 import fs from "fs";
 import renderViewMiddleware from "./middleware/renderView";
+import path from "path";
 
 export default function server(parameters) {
-  console.log("oarams", parameters);
   const app = express();
 
-  app.use(express.static(__dirname));
+  // app.use(express.static(path.join(__dirname, "..", "build/assets")));
+
+  // app.use("/assets", express.static(path.join(__dirname, "public")));
+
+  app.use(
+    "/assets",
+    express.static(path.join(__dirname, "..", "build/assets"))
+  );
+
+  // console.log("folder", path.resolve(__dirname, "..", "assets"));
 
   app.get("/api/user/cart", (req, res) => {
     fs.readFile("./data/cart.json", "utf8", (err, data) => {
@@ -43,7 +52,7 @@ export default function server(parameters) {
     });
   });
 
-  app.get("/test", (req, res) => {
+  app.get("/assets", (req, res) => {
     res.send("Test route success!");
   });
 

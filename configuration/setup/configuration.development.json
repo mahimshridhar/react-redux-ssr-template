@@ -1,5 +1,5 @@
 {
-	"webpackDevServer": {
-		"port": 3000
-	}
+  "webpackDevServer": {
+    "port": 3000
+  }
 }
