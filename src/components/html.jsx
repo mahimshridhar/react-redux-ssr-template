@@ -7,17 +7,19 @@ const HTML = (props) => {
   // props.metatags.forEach((item) => {
   //   metatagsArray.push(<meta {...item} />);
   // });
+
+  // console.log(
+  //   "assets",
+  //   props.assets.chunks().javascript.main,
+  //   Object.keys(props.assets.chunks().javascript).length
+  // );
   return (
     <html>
       <head>
-        <title>Chapter 2 - Recipes</title>
+        <title>React SSR Template</title>
         {/* {metatagsArray} */}
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-        />
 
-        <link rel="stylesheet" href="assets/style.css" />
+        {/* <link rel="stylesheet" href="assets/style.css" /> */}
       </head>
       <body>
         <div
@@ -31,7 +33,16 @@ const HTML = (props) => {
             __html: `window.__SERIALIZED_STATE__ = JSON.stringify(${props.serverState})`,
           }}
         />
-        <script type="application/javascript" src="browser.js" />{" "}
+
+        {Object.keys(props.assets.chunks().javascript).map((key) => {
+          return (
+            <script
+              key={key}
+              type="application/javascript"
+              src={props.assets.chunks().javascript[key]}
+            />
+          );
+        })}
       </body>
     </html>
   );

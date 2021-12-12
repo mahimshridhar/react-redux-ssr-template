@@ -1,13 +1,13 @@
 {
   "presets": ["@babel/preset-env", "@babel/preset-react"],
-  // "env": {
-  //   "webpack-env": {
-  //     "plugins": ["@babel/plugin-syntax-dynamic-import"]
-  //   },
-  //   "development": {
-  //     "plugins": ["@babel/plugin-syntax-dynamic-import", "dynamic-import-node"]
-  //   }
-  // },
+  "env": {
+    // "webpack-env": {
+    //   "plugins": ["@babel/plugin-syntax-dynamic-import"]
+    // },
+    "development": {
+      "plugins": ["react-hot-loader/babel"]
+    }
+  },
   "plugins": [
     "@babel/plugin-transform-destructuring",
     "@babel/plugin-transform-parameters",

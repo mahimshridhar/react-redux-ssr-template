@@ -1,12 +1,13 @@
 import express from "express";
 import fs from "fs";
-import renderViewMiddleware from "./middleware/renderView";
+import path from "path";
+import renderViewMiddleware from "../src/middleware/renderView";
 
 export default function server(parameters) {
-  console.log("oarams", parameters);
+  // console.log("oarams", parameters);
   const app = express();
 
-  app.use(express.static(__dirname));
+  app.use(express.static(__dirname + "build/assets"));
 
   app.get("/api/user/cart", (req, res) => {
     fs.readFile("./data/cart.json", "utf8", (err, data) => {

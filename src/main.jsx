@@ -19,3 +19,30 @@ ReactDOM.hydrate(
   </Provider>,
   document.getElementById("react-content")
 );
+
+if (module.hot) {
+  // module.hot.accept("", () => {
+  //   // const nextApp = require("./containers/App").default;
+
+  //   ReactDOM.hydrate(
+  //     <Provider store={store}>
+  //       <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>
+  //     </Provider>,
+  //     document.getElementById("react-content")
+  //   );
+  // });
+  module.hot.accept();
+}
+
+// const render = (App) => {
+//   ReactDOM.hydrate(<App />, document.getElementById("react-content"));
+// };
+
+// render(
+//   // ReactDOM.hydrate(
+//   <Provider store={store}>
+//     <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>
+//   </Provider>
+//   // document.getElementById("react-content")
+//   // )
+// );

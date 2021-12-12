@@ -6,7 +6,7 @@ import Item from "./item";
 
 class Cart extends Component {
   static prefetchActions() {
-    return [getCartItems];
+    return [];
   }
 
   // static createMetatags(params, store) {

@@ -1,0 +1,6 @@
+{
+  "server": {
+    "input": "./src/app.es6",
+    "output": "./build/server/server.js"
+  }
+}
