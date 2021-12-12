@@ -305,15 +305,65 @@ var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoader
 
 
 
-var _default = function _default() {
+var Product = function Product(props) {
+  //  A unique situation, where you need
+  // to update a part of the DOM that isn’t controlled by
+  // React. The following listing shows you what to add.
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    document.getElementsByTagName("title")[0].innerHTMl = Product.createTitle(props);
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    document.getElementsByTagName("title")[0].innerHTMl = Product.createTitle(props);
+  }, [props]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "products"
   }, "Please thanks for helping me i hope its all good"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    alt: "product description",
     src: _assets_nature_jpg__WEBPACK_IMPORTED_MODULE_1__["default"],
     className: "products__image"
   }));
 };
 
+__signature__(Product, "useEffect{}\nuseEffect{}");
+
+Product.createMetatags = function (params) {
+  var tags = [];
+  tags.push({
+    name: "description",
+    content: "demo conent"
+  });
+  tags.push({
+    property: "og:description",
+    content: "demo description"
+  });
+  tags.push({
+    property: "og:title",
+    content: "demo title"
+  });
+  tags.push({
+    property: "og:url",
+    content: "http://localhost:3001/product"
+  });
+  tags.push({
+    property: "og:image",
+    content: "demo image"
+  });
+  return tags;
+};
+
+Product.createTitle = function (props) {
+  //here name will come from porops
+  return "A product - Demo Site";
+};
+
+function fetchProduct() {
+  return console.log("sup");
+} // Product.prefetchActions = () => {
+//   return [fetchProduct];
+// };
+
+
+var _default = Product;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_default);
 ;
 
@@ -324,6 +374,8 @@ var _default = function _default() {
     return;
   }
 
+  reactHotLoader.register(Product, "Product", "/home/xcelpros/mahim/basic-react-ssr-template/src/components/Product.jsx");
+  reactHotLoader.register(fetchProduct, "fetchProduct", "/home/xcelpros/mahim/basic-react-ssr-template/src/components/Product.jsx");
   reactHotLoader.register(_default, "default", "/home/xcelpros/mahim/basic-react-ssr-template/src/components/Product.jsx");
 })();
 
@@ -625,19 +677,14 @@ var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoader
 
 
 var HTML = function HTML(props) {
-  // const metatagsArray = [];
-  // props.metatags.forEach((item) => {
-  //   metatagsArray.push(<meta {...item} />);
-  // });
-  // console.log(
-  //   "assets",
-  //   props.assets.chunks().javascript.main,
-  //   Object.keys(props.assets.chunks().javascript).length
-  // );
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("title", null, "React SSR Template"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meta", {
+  var metatagsArray = [];
+  props.metatags.forEach(function (item) {
+    metatagsArray.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meta", item));
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("html", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("head", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("title", null, props.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meta", {
     name: "viewport",
     content: "width=device-width, initial-scale=1.0"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }), metatagsArray), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("body", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "react-content",
     dangerouslySetInnerHTML: {
       __html: props.renderedToStringComponents
@@ -1210,6 +1257,36 @@ var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoader
 
  // import cache from "../shared/cache.es6";
 
+function flattenStaticFunction(matches, staticFuncName) {
+  var store = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var request = arguments.length > 3 ? arguments[3] : undefined;
+  var results = matches.map(function (_ref) {
+    var match = _ref.match,
+        route = _ref.route;
+    var component = route.component;
+
+    if (component) {
+      if (component.displayName && component.displayName.toLowerCase().indexOf("connect") > -1) {
+        var parentComponent = component.WrappedComponent;
+
+        if (parentComponent[staticFuncName]) {
+          actions.push(parentComponent[staticFuncName](request.params[0], store, request));
+        } else if (parentComponent.wrappedComponent && parentComponent.wrappedComponent[staticFuncName](request.params[0], store, request)) {
+          actions.push(parentComponent.wrappedComponent[staticFuncName](request.params[0], store, request));
+        }
+      } else if (component[staticFuncName]) {
+        return component[staticFuncName](request.params[0], store, request);
+      }
+    }
+
+    return [];
+  });
+  results = results.reduce(function (flat, toFlatten) {
+    return flat.concat(toFlatten);
+  }, []);
+  return results;
+}
+
 function renderView(parameters) {
   return function (req, res, next) {
     var matches = (0,react_router_config__WEBPACK_IMPORTED_MODULE_3__.matchRoutes)(_shared_sharedRoutes2_es6__WEBPACK_IMPORTED_MODULE_5__["default"], req.path);
@@ -1220,36 +1297,47 @@ function renderView(parameters) {
       // if (cachedPage) {
       //   return res.send(cachedPage);
       // }
-      var store = (0,_init_redux__WEBPACK_IMPORTED_MODULE_7__["default"])();
-      var actions = [];
-      matches.map(function (_ref) {
-        var match = _ref.match,
-            route = _ref.route;
-        var component = route.component;
+      var store = (0,_init_redux__WEBPACK_IMPORTED_MODULE_7__["default"])(); // let actions = [];
+      // matches.map(({ match, route }) => {
+      //   const component = route.component;
+      //   if (component) {
+      //     if (
+      //       component.displayName &&
+      //       component.displayName.toLowerCase().indexOf("connect") > -1
+      //     ) {
+      //       let parentComponent = component.WrappedComponent;
+      //       if (parentComponent.prefetchActions) {
+      //         actions.push(parentComponent.prefetchActions());
+      //       } else if (
+      //         parentComponent.wrappedComponent &&
+      //         parentComponent.wrappedComponent().prefetchActions
+      //       ) {
+      //         actions.push(
+      //           parentComponent.wrappedComponent().prefetchActions()
+      //         );
+      //       }
+      //     } else if (component.prefetchActions) {
+      //       actions.push(component.prefetchActions());
+      //     }
+      //   }
+      // });
 
-        if (component) {
-          if (component.displayName && component.displayName.toLowerCase().indexOf("connect") > -1) {
-            var parentComponent = component.WrappedComponent;
+      var _actions = flattenStaticFunction(matches, "prefetchActions", null, req);
 
-            if (parentComponent.prefetchActions) {
-              actions.push(parentComponent.prefetchActions());
-            } else if (parentComponent.wrappedComponent && parentComponent.wrappedComponent().prefetchActions) {
-              actions.push(parentComponent.wrappedComponent().prefetchActions());
-            }
-          } else if (component.prefetchActions) {
-            actions.push(component.prefetchActions());
-          }
-        }
-      });
-      actions = actions.reduce(function (flat, toFlatten) {
+      _actions = _actions.reduce(function (flat, toFlatten) {
         return flat.concat(toFlatten);
       }, []);
-      var promises = actions.map(function (initialAction) {
+      console.log("actions", _actions);
+
+      var promises = _actions.map(function (initialAction) {
         return store.dispatch(initialAction());
       });
+
       Promise.all(promises).then(function () {
         var serverState = store.getState();
         var stringifiedServerState = JSON.stringify(serverState);
+        var seoTags = flattenStaticFunction(matches, "createMetatags", serverState, req);
+        var title = flattenStaticFunction(matches, "createTitle", serverState, req);
         var app = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_redux__WEBPACK_IMPORTED_MODULE_4__.Provider, {
           store: store
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.StaticRouter, {
@@ -1259,6 +1347,8 @@ function renderView(parameters) {
 
         if (!context.url) {
           var html = (0,react_dom_server__WEBPACK_IMPORTED_MODULE_1__.renderToString)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_html__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            title: title,
+            metatags: seoTags,
             assets: parameters,
             renderedToStringComponents: app,
             serverState: stringifiedServerState
@@ -1281,6 +1371,7 @@ function renderView(parameters) {
     return;
   }
 
+  reactHotLoader.register(flattenStaticFunction, "flattenStaticFunction", "/home/xcelpros/mahim/basic-react-ssr-template/src/middleware/renderView.jsx");
   reactHotLoader.register(renderView, "renderView", "/home/xcelpros/mahim/basic-react-ssr-template/src/middleware/renderView.jsx");
 })();
 
