@@ -17,6 +17,10 @@ const HTML = (props) => {
     <html>
       <head>
         <title>React SSR Template</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        ></meta>
         {/* {metatagsArray} */}
 
         {/* <link rel="stylesheet" href="assets/style.css" /> */}
