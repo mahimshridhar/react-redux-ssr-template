@@ -4,19 +4,19 @@ import PropTypes from "prop-types";
 const HTML = (props) => {
   const metatagsArray = [];
 
-  props.metatags.forEach((item, index) => {
-    metatagsArray.push(<meta key={`meta-${index}`} {...item} />);
+  props.metatags.forEach((item) => {
+    metatagsArray.push(<meta {...item} />);
   });
 
   return (
     <html>
       <head>
-        <title>React SSR Template</title>
+        <title>{props.title}</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
         ></meta>
-        {/* {metatagsArray} */}
+        {metatagsArray}
 
         {/* <link rel="stylesheet" href="assets/style.css" /> */}
       </head>
