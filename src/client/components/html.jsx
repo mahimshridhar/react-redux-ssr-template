@@ -11,21 +11,14 @@ const HTML = (props) => {
   return (
     <html>
       <head>
-        <title>{props.title}</title>
+        <title>React SSR Template</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
         ></meta>
-        {metatagsArray}
-        {Object.keys(props.assets.chunks().styles).map((key) => {
-          return (
-            <link
-              key={key}
-              rel="stylesheet"
-              href={props.assets.chunks().styles[key]}
-            />
-          );
-        })}
+        {/* {metatagsArray} */}
+
+        {/* <link rel="stylesheet" href="assets/style.css" /> */}
       </head>
       <body>
         <div
