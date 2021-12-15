@@ -72,3 +72,6 @@ const onRouteChange = (WrappedComponent) => {
 };
 
 export default onRouteChange;
+//file chnge -> reload browser  fs event
+//open tab
+//listen to tab
