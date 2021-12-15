@@ -10,7 +10,7 @@ const HTML = (props) => {
   return (
     <html>
       <head>
-        <title>Chapter 2 - Recipes</title>
+        <title>ssr</title>
         {/* {metatagsArray} */}
         {/* <link
           rel="stylesheet"
