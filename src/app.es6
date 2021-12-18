@@ -15,7 +15,7 @@ export default function server(parameters) {
   //   express.static(path.join(__dirname, "..", "build/assets"))
   // );
 
-  app.use("/", express.static(path.join(__dirname, "../build/assets")));
+  app.use(express.static(path.join(__dirname, "assets")));
 
   // app.use("/assets", (req, res) => {
   //   res.send("sd");

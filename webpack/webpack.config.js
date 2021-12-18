@@ -12,7 +12,7 @@ module.exports = {
 
   output: {
     // Filesystem path for static files
-    path: path.resolve(ROOT_DIRECTORY, "build/assets"),
+    path: path.resolve(ROOT_DIRECTORY, "assets"),
 
     // Network path for static files
     publicPath: setupConfiguration.publicPath + "/",
