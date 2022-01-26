@@ -11,7 +11,7 @@ import initRedux from "../init-redux";
 function flattenStaticFunction(matches, staticFuncName, store = {}, request) {
   let results = matches.map(({ match, route }) => {
     const component = route.component;
-
+    console.log("component", component);
     if (component) {
       if (
         component.displayName &&
@@ -19,23 +19,19 @@ function flattenStaticFunction(matches, staticFuncName, store = {}, request) {
       ) {
         let parentComponent = component.WrappedComponent;
         if (parentComponent[staticFuncName]) {
-          actions.push(
-            parentComponent[staticFuncName](request.params[0], store, request)
-          );
-        } else if (
-          parentComponent.wrappedComponent &&
-          parentComponent.wrappedComponent[staticFuncName](
+          return parentComponent[staticFuncName](
             request.params[0],
             store,
             request
-          )
+          );
+        } else if (
+          parentComponent.wrappedComponent &&
+          parentComponent.wrappedComponent[staticFuncName]
         ) {
-          actions.push(
-            parentComponent.wrappedComponent[staticFuncName](
-              request.params[0],
-              store,
-              request
-            )
+          return parentComponent.wrappedComponent[staticFuncName](
+            request.params[0],
+            store,
+            request
           );
         }
       } else if (component[staticFuncName]) {
