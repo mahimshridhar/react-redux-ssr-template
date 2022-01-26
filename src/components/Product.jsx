@@ -19,6 +19,7 @@ const Product = (props) => {
     <div>
       <p className="products">simple product</p>
       <img alt="product description" src={nature} className="products__image" />
+      <p>hope all is working fine</p>
     </div>
   );
 };

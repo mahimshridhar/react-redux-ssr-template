@@ -51,6 +51,6 @@ export default function server(parameters) {
   app.get("/*", renderViewMiddleware(parameters));
 
   app.listen(3001, () => {
-    console.log("App listening on port: 3001");
+    console.log("App listening on port: 2");
   });
 }
