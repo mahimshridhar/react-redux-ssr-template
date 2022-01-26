@@ -1,10 +1,8 @@
 import path from "path";
 import webpack from "webpack";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
-// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
-
 import { clientConfiguration } from "universal-webpack";
 import settings from "./universal-webpack-settings";
 import baseConfiguration from "./webpack.config";

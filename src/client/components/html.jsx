@@ -17,8 +17,15 @@ const HTML = (props) => {
           content="width=device-width, initial-scale=1.0"
         ></meta>
         {metatagsArray}
-
-        {/* <link rel="stylesheet" href="assets/style.css" /> */}
+        {Object.keys(props.assets.chunks().styles).map((key) => {
+          return (
+            <link
+              key={key}
+              rel="stylesheet"
+              href={props.assets.chunks().styles[key]}
+            />
+          );
+        })}
       </head>
       <body>
         <div

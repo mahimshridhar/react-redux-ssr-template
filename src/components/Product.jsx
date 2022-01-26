@@ -2,9 +2,6 @@ import React, { useEffect } from "react";
 import nature from "../assets/nature.jpg";
 
 const Product = (props) => {
-  //  A unique situation, where you need
-  // to update a part of the DOM that isn’t controlled by
-  // React. The following listing shows you what to add.
   useEffect(() => {
     document.getElementsByTagName("title")[0].innerHTMl =
       Product.createTitle(props);
@@ -19,7 +16,7 @@ const Product = (props) => {
     <div>
       <p className="products">simple product</p>
       <img alt="product description" src={nature} className="products__image" />
-      <p>hope all is working fine</p>
+      <p>hope all is working fine!!!! </p>
     </div>
   );
 };
