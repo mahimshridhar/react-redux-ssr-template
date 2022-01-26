@@ -1,3 +1,5 @@
 node_modules/
 src/browser.js
-build/
+build/*
+.env
+package-lock.json
