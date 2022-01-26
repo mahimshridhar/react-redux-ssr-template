@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 const HTML = (props) => {
   const metatagsArray = [];
 
-  props.metatags.forEach((item) => {
-    metatagsArray.push(<meta {...item} />);
+  props.metatags.forEach((item, index) => {
+    metatagsArray.push(<meta key={`meta-${index}`} {...item} />);
   });
 
   return (

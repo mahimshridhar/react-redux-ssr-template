@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "new:dev": "npm-run-all development:client:rendering-service:build:prepare development",
+    "dev": "npm-run-all development:client:rendering-service:build:prepare development",
     "development": "npm-run-all --parallel development:client:build development:client:rendering-service:build development:services",
     "development:client:rendering-service:build:prepare": "universal-webpack --settings ./webpack/universal-webpack-settings.json prepare",
     "development:client:build": "webpack serve --hot --config webpack/webpack.config.client.development.babel.js",
