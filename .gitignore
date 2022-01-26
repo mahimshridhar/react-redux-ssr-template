@@ -2,7 +2,4 @@ node_modules/
 src/browser.js
 build/*
 .env
-<<<<<<< HEAD
 package-lock.json
-=======
->>>>>>> improvements made in webpack setup
