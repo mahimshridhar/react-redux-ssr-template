@@ -61,7 +61,7 @@ module.exports = {
     hints: false,
   },
   resolve: {
-    extensions: [".js", ".jsx", ".css", ".es6"],
+    extensions: [".js", ".jsx", ".css", ".es6", ".json"],
   },
 
   // Plugins will be added to this array by extending configurations.

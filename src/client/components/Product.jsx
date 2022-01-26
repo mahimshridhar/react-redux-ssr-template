@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import nature from "../assets/nature.jpg";
+// import nature from "../assets/nature.jpg";
 
 const Product = (props) => {
   useEffect(() => {

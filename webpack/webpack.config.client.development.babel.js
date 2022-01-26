@@ -19,12 +19,15 @@ configuration = setDevFileServer(configuration);
 // Run `webpack serve`.
 configuration.devServer = devServerConfig;
 
-configuration.entry = "./src/main.jsx";
+configuration.entry = "./src/client/main.jsx";
 
-// Prints more readable module names in the browser console on HMR updates.
-configuration.optimization = {
-  ...configuration.optimization,
-  moduleIds: "named",
-};
+(configuration.infrastructureLogging = {
+  level: "error",
+}),
+  // Prints more readable module names in the browser console on HMR updates.
+  (configuration.optimization = {
+    ...configuration.optimization,
+    moduleIds: "named",
+  });
 
 export default configuration;

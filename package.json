@@ -8,12 +8,12 @@
     "development:client:rendering-service:build:prepare": "universal-webpack --settings ./webpack/universal-webpack-settings.json prepare",
     "development:client:build": "webpack serve --hot --config webpack/webpack.config.client.development.babel.js",
     "development:client:rendering-service:build": "webpack --mode development --config ./webpack/webpack.config.server.development.babel.js --watch --color --stats-errors --stats-error-details --module-strict-export-presence",
-    "development:client:rendering-service": "nodemon ./renderingService/index.entry.js --watch ./renderingService --watch ./build/server --no-update-notifier",
+    "development:client:rendering-service": "nodemon ./src/server/index.entry.js --watch ./src/server --watch ./build/server --no-update-notifier",
     "development:services": "npm-run-all --parallel development:client:rendering-service",
     "production": "npm-run-all production:client:build production:client:rendering-service:build",
     "production:client:build": "webpack  --stats-error-details --module-strict-export-presence --config ./webpack/webpack.config.client.production.babel.js",
     "production:client:rendering-service:build": "webpack --mode production --color --stats-errors --stats-error-details --module-strict-export-presence --config ./webpack/webpack.config.server.production.babel.js",
-    "production:client:rendering-service": "NODE_ENV=production node ./renderingService/index.entry.js",
+    "production:client:rendering-service": "NODE_ENV=production node ./src/server/index.entry.js",
     "test": "jest"
   },
   "repository": {

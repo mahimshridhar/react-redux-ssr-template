@@ -37,7 +37,7 @@ const modifiedRules = configuration.module.rules.map((rule) => {
 
 configuration.module.rules = modifiedRules;
 
-configuration.entry = "./src/main.jsx";
+configuration.entry = "./src/client/main.jsx";
 configuration.plugins.push(
   // Clears the output folder before building.
   new CleanWebpackPlugin(),

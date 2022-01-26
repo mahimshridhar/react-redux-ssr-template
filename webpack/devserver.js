@@ -7,7 +7,6 @@ export const devServerConfig = {
   static: {
     publicPath: setupConfig.publicPath + "/",
   },
-
   headers: {
     "Access-Control-Allow-Origin": "*",
   },

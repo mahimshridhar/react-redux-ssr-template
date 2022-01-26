@@ -1,11 +1,11 @@
 import React from "react";
-import { renderToString, renderToNodeStream } from "react-dom/server";
+import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 import { matchRoutes, renderRoutes } from "react-router-config";
 import { Provider } from "react-redux";
-import routes from "../shared/sharedRoutes2.es6";
-import HTML from "../components/html";
-import initRedux from "../init-redux";
+import routes from "../../shared/sharedRoutes.js";
+import HTML from "../../client/components/html";
+import initRedux from "../../shared/redux/initRedux";
 
 function flattenStaticFunction(matches, staticFuncName, store = {}, request) {
   let results = matches.map(({ match, route }) => {

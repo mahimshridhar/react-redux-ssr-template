@@ -1,17 +1,14 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import recipes from "./recipe-reducer";
-import cart from "./cart-reducer.es6";
-
+import counterReducer from "./counterReducer.js";
 import loggerMiddleware from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 
 export default function (initialState = {}) {
   const reducer = combineReducers({
-    recipes,
-    cart: cart,
+    counter: counterReducer,
   });
 
-  let middleware = [thunkMiddleware];
+  let middleware = [loggerMiddleware, thunkMiddleware];
 
   const store = createStore(
     reducer,

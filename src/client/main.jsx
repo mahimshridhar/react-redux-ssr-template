@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import initRedux from "./init-redux.es6";
+import initRedux from "../shared/redux/initRedux.js";
 import { BrowserRouter } from "react-router-dom";
-import routes from "./shared/sharedRoutes2.es6";
+import routes from "../shared/sharedRoutes.js";
 import { renderRoutes } from "react-router-config";
 
-require("./styles/style.css");
+require("../styles/style.css");
 
 const initialState = JSON.parse(window.__SERIALIZED_STATE__);
 const store = initRedux(initialState);
