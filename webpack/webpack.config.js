@@ -1,13 +1,7 @@
-// Base Webpack configuration.
-//
-// Not using ES6 syntax here because this file
-// is not processed with Babel on server side.
-// See `./rendering-service/index.js` for more info.
-
 const path = require("path");
 const webpack = require("webpack");
 
-const configuration = require("../configuration");
+// const configuration = require("../configuration");
 const setupConfiguration = require("../configuration/setup");
 
 const ROOT_DIRECTORY = path.resolve(__dirname, "..");
@@ -71,4 +65,5 @@ module.exports = {
   },
 
   // Plugins will be added to this array by extending configurations.
+  plugins: [],
 };

@@ -6,12 +6,10 @@ import { Provider } from "react-redux";
 import routes from "../shared/sharedRoutes2.es6";
 import HTML from "../components/html";
 import initRedux from "../init-redux";
-// import cache from "../shared/cache.es6";
 
 function flattenStaticFunction(matches, staticFuncName, store = {}, request) {
   let results = matches.map(({ match, route }) => {
     const component = route.component;
-    console.log("component", component);
     if (component) {
       if (
         component.displayName &&
@@ -54,36 +52,7 @@ export default function renderView(parameters) {
     const context = {};
 
     if (matches) {
-      // const cachedPage = cache.get(req.url);
-      // if (cachedPage) {
-      //   return res.send(cachedPage);
-      // }
-
       const store = initRedux();
-      // let actions = [];
-      // matches.map(({ match, route }) => {
-      //   const component = route.component;
-      //   if (component) {
-      //     if (
-      //       component.displayName &&
-      //       component.displayName.toLowerCase().indexOf("connect") > -1
-      //     ) {
-      //       let parentComponent = component.WrappedComponent;
-      //       if (parentComponent.prefetchActions) {
-      //         actions.push(parentComponent.prefetchActions());
-      //       } else if (
-      //         parentComponent.wrappedComponent &&
-      //         parentComponent.wrappedComponent().prefetchActions
-      //       ) {
-      //         actions.push(
-      //           parentComponent.wrappedComponent().prefetchActions()
-      //         );
-      //       }
-      //     } else if (component.prefetchActions) {
-      //       actions.push(component.prefetchActions());
-      //     }
-      //   }
-      // });
 
       let actions = flattenStaticFunction(
         matches,
@@ -95,8 +64,6 @@ export default function renderView(parameters) {
       actions = actions.reduce((flat, toFlatten) => {
         return flat.concat(toFlatten);
       }, []);
-
-      console.log("actions", actions);
 
       const promises = actions.map((initialAction) => {
         return store.dispatch(initialAction());

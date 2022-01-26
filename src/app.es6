@@ -4,6 +4,12 @@ import renderViewMiddleware from "./middleware/renderView";
 import path from "path";
 var morgan = require("morgan");
 
+// const setupConfiguration = require("configuration/setup");
+
+// import setupConfiguration from "../configuration/setup";
+
+const PORT = 8000;
+
 export default function server(parameters) {
   const app = express();
 
@@ -54,7 +60,7 @@ export default function server(parameters) {
 
   app.use(renderViewMiddleware(parameters));
 
-  app.listen(3001, () => {
-    console.log("App listening on port: 3001");
+  app.listen(PORT, () => {
+    console.log(`App listening on port: ${PORT}`);
   });
 }
